@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Redistribution Engine – Food Bridge AI</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body class="bg-slate-50 text-slate-800 flex flex-col min-h-screen">
+
+  <!-- Navbar -->
+  <div id="navbar-container"></div>
+
+  <!-- Header Banner -->
+  <div class="bg-white border-b border-slate-100 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2 text-xs font-bold text-emerald-600 mb-1">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Autonomous Food Matching
+          </div>
+          <h1 class="text-3xl font-extrabold text-slate-900 font-outfit">AI Redistribution Engine</h1>
+          <p class="text-xs sm:text-sm text-slate-500 mt-1">
+            Multi-criteria spatial optimization matching surplus food to verified shelters with freshness decay modeling.
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span> AI Engine Live
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full space-y-10">
+    
+    <!-- 4 Mathematical Pillars Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      
+      <div class="fb-card p-5 bg-white border border-slate-200">
+        <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-lg mb-3">
+          <i class="fa-solid fa-temperature-arrow-up"></i>
+        </div>
+        <h4 class="font-bold text-slate-900 text-sm">1. Quality & Decay Curve</h4>
+        <p class="text-xs text-slate-500 mt-1">Calculates freshness index based on food category, preparation time, and storage medium.</p>
+        <span class="text-[11px] font-bold text-emerald-600 block mt-2">Weight: 25%</span>
+      </div>
+
+      <div class="fb-card p-5 bg-white border border-slate-200">
+        <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-lg mb-3">
+          <i class="fa-solid fa-route"></i>
+        </div>
+        <h4 class="font-bold text-slate-900 text-sm">2. Locality Distance</h4>
+        <p class="text-xs text-slate-500 mt-1">Computes great-circle road transit feasibility without exposing raw coordinates to users.</p>
+        <span class="text-[11px] font-bold text-amber-600 block mt-2">Weight: 35%</span>
+      </div>
+
+      <div class="fb-card p-5 bg-white border border-slate-200">
+        <div class="w-10 h-10 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center text-lg mb-3">
+          <i class="fa-solid fa-people-roof"></i>
+        </div>
+        <h4 class="font-bold text-slate-900 text-sm">3. Capacity Match Ratio</h4>
+        <p class="text-xs text-slate-500 mt-1">Matches meal donation volume directly to the verified intake capacity of local shelters.</p>
+        <span class="text-[11px] font-bold text-teal-600 block mt-2">Weight: 25%</span>
+      </div>
+
+      <div class="fb-card p-5 bg-white border border-slate-200">
+        <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center text-lg mb-3">
+          <i class="fa-solid fa-hourglass-half"></i>
+        </div>
+        <h4 class="font-bold text-slate-900 text-sm">4. Expiry Urgency Window</h4>
+        <p class="text-xs text-slate-500 mt-1">Prioritizes immediate collection if expiry is within 2 hours, alerting closest volunteers.</p>
+        <span class="text-[11px] font-bold text-rose-600 block mt-2">Weight: 15%</span>
+      </div>
+
+    </div>
+
+    <!-- Live Network Matches (Section 10 Requirements) -->
+    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+      
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 gap-3">
+        <div>
+          <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Network Optimization</span>
+          <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 font-outfit">AI Recommended Pairings</h2>
+          <p class="text-xs text-slate-500">Live optimal matches generated for currently available food donations.</p>
+        </div>
+        <button onclick="loadNetworkMatches()" class="btn-secondary text-xs py-2 px-4 font-bold flex items-center gap-1.5 self-start sm:self-auto">
+          <i class="fa-solid fa-arrows-rotate"></i> Re-evaluate Matches
+        </button>
+      </div>
+
+      <!-- Network Summary Bar -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-emerald-50/60 p-4 rounded-2xl border border-emerald-100 text-emerald-950 text-xs">
+        <div>
+          <span class="text-slate-500 block text-[11px] font-bold uppercase">Total Batches Matched</span>
+          <strong id="match-total-batches" class="text-lg font-black text-emerald-800">--</strong>
+        </div>
+        <div>
+          <span class="text-slate-500 block text-[11px] font-bold uppercase">Total Meals Optimized</span>
+          <strong id="match-total-meals" class="text-lg font-black text-emerald-800">--</strong>
+        </div>
+        <div>
+          <span class="text-slate-500 block text-[11px] font-bold uppercase">Average Match Score</span>
+          <strong id="match-avg-score" class="text-lg font-black text-emerald-800">--%</strong>
+        </div>
+      </div>
+
+      <!-- Matches Container -->
+      <div id="ai-matches-container" class="space-y-4">
+        <div class="p-8 text-center text-xs text-slate-400">Loading AI matches...</div>
+      </div>
+
+    </div>
+
+    <!-- Interactive AI Quality & Freshness Simulator (Viva Demonstration Tool) -->
+    <div class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl p-6 sm:p-10 text-white shadow-xl space-y-6">
+      
+      <div>
+        <span class="text-xs font-extrabold text-amber-400 bg-amber-400/10 px-3 py-1 rounded-full uppercase tracking-wider">
+          Interactive Viva Tool
+        </span>
+        <h2 class="text-2xl font-extrabold font-outfit mt-2">AI Food Quality & Freshness Predictor</h2>
+        <p class="text-xs sm:text-sm text-slate-300">
+          Simulate food safety decay rates in real time. Adjust preparation time and storage conditions to see the AI quality grade.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        
+        <!-- Controls Form -->
+        <div class="lg:col-span-6 space-y-4 text-xs">
+          
+          <div>
+            <label class="block font-bold text-slate-300 mb-1 uppercase">Food Category</label>
+            <select id="sim-category" onchange="runQualitySimulator()" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-emerald-400 font-semibold">
+              <option value="Cooked Meals">Cooked Meals (Rice, Curry, Dal)</option>
+              <option value="Bakery & Bread">Bakery & Bread Products</option>
+              <option value="Fruits & Vegetables">Fresh Fruits & Raw Produce</option>
+              <option value="Dairy & Beverages">Dairy & Hot Soups</option>
+            </select>
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <label class="font-bold text-slate-300 uppercase">Preparation Time Elapsed: <span id="prep-hours-label" class="text-amber-400 font-bold">2.5 Hours Ago</span></label>
+            </div>
+            <input type="range" id="sim-hours" min="0.5" max="10" step="0.5" value="2.5" oninput="runQualitySimulator()"
+              class="w-full accent-emerald-500 cursor-pointer">
+            <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+              <span>0.5h (Freshly Prepared)</span>
+              <span>5h</span>
+              <span>10h (Spoilage threshold)</span>
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-300 mb-1 uppercase">Storage Condition</label>
+            <div class="grid grid-cols-3 gap-2">
+              <button type="button" onclick="setStorage('ambient')" id="btn-ambient" class="storage-btn p-2 rounded-xl border border-slate-700 bg-slate-800 text-slate-300 hover:text-white font-semibold text-center">
+                🌡️ Ambient
+              </button>
+              <button type="button" onclick="setStorage('heated')" id="btn-heated" class="storage-btn p-2 rounded-xl border border-emerald-500 bg-emerald-500/20 text-white font-semibold text-center">
+                🔥 Hot Insulated
+              </button>
+              <button type="button" onclick="setStorage('refrigerated')" id="btn-refrigerated" class="storage-btn p-2 rounded-xl border border-slate-700 bg-slate-800 text-slate-300 hover:text-white font-semibold text-center">
+                ❄️ Refrigerated
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Simulation Output Card -->
+        <div class="lg:col-span-6 bg-slate-800/90 rounded-2xl p-6 border border-slate-700 space-y-4">
+          
+          <div class="flex items-center justify-between pb-3 border-b border-slate-700">
+            <span class="text-xs font-bold text-slate-400">AI Assessment Result</span>
+            <span id="sim-quality-badge" class="px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-emerald-500 text-slate-950 uppercase">
+              🟢 Excellent Quality
+            </span>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs mb-1">
+              <span class="text-slate-300">Freshness Confidence Index:</span>
+              <strong id="sim-freshness-index" class="text-emerald-400 text-sm">92.5 / 100</strong>
+            </div>
+            <div class="w-full bg-slate-700 h-2.5 rounded-full overflow-hidden">
+              <div id="sim-freshness-bar" class="bg-emerald-400 h-2.5 rounded-full transition-all duration-300" style="width: 92.5%"></div>
+            </div>
+          </div>
+
+          <div class="bg-slate-900/80 p-3.5 rounded-xl border border-slate-700 space-y-1 text-xs">
+            <p class="text-slate-300">Safe Redistribution Window: <strong id="sim-safe-hours" class="text-amber-400">~5.5 Hours Remaining</strong></p>
+            <p id="sim-recommendation-text" class="text-slate-400 text-[11px] leading-snug">
+              Safe for immediate consumption and standard locality distribution.
+            </p>
+          </div>
+
+          <div class="text-[10px] text-slate-400 flex items-center gap-1.5 pt-1">
+            <i class="fa-solid fa-circle-check text-emerald-400"></i>
+            <span>Based on FSSAI surplus cooked food redistribution guidelines.</span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Dynamic Footer -->
+  <div id="footer-container"></div>
+
+  <!-- Scripts -->
+  <script src="/assets/app.js"></script>
+  <script src="/components/navbar.js"></script>
+  <script src="/components/footer.js"></script>
+  <script>
+    let currentStorage = 'heated';
+
+    function setStorage(type) {
+      currentStorage = type;
+      ['ambient', 'heated', 'refrigerated'].forEach(t => {
+        const btn = document.getElementById(`btn-${t}`);
+        if (t === type) {
+          btn.className = "storage-btn p-2 rounded-xl border border-emerald-500 bg-emerald-500/20 text-white font-semibold text-center";
+        } else {
+          btn.className = "storage-btn p-2 rounded-xl border border-slate-700 bg-slate-800 text-slate-300 hover:text-white font-semibold text-center";
+        }
+      });
+      runQualitySimulator();
+    }
+
+    async function runQualitySimulator() {
+      const hours = parseFloat(document.getElementById("sim-hours").value);
+      const category = document.getElementById("sim-category").value;
+      document.getElementById("prep-hours-label").textContent = `${hours} Hours Ago`;
+
+      try {
+        const res = await fetch("/api/ai/quality-predictor", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            category: category,
+            prep_hours_ago: hours,
+            storage: currentStorage
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          document.getElementById("sim-freshness-index").textContent = `${data.freshness_index} / 100`;
+          document.getElementById("sim-freshness-bar").style.width = `${data.freshness_index}%`;
+          document.getElementById("sim-safe-hours").textContent = `~${data.safe_window_hours} Hours Remaining`;
+          document.getElementById("sim-recommendation-text").textContent = data.recommendation;
+
+          const badge = document.getElementById("sim-quality-badge");
+          const icon = data.quality_tier === 'Excellent' ? '🟢' :
+                       data.quality_tier === 'Good' ? '🟡' :
+                       data.quality_tier === 'Average' ? '🟠' : '🔴';
+
+          badge.textContent = `${icon} ${data.quality_tier} Quality`;
+          if (data.quality_tier === 'Excellent') {
+            badge.className = "px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-emerald-500 text-slate-950 uppercase";
+            document.getElementById("sim-freshness-bar").className = "bg-emerald-400 h-2.5 rounded-full transition-all duration-300";
+          } else if (data.quality_tier === 'Good') {
+            badge.className = "px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-amber-400 text-slate-950 uppercase";
+            document.getElementById("sim-freshness-bar").className = "bg-amber-400 h-2.5 rounded-full transition-all duration-300";
+          } else if (data.quality_tier === 'Average') {
+            badge.className = "px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-orange-500 text-white uppercase";
+            document.getElementById("sim-freshness-bar").className = "bg-orange-500 h-2.5 rounded-full transition-all duration-300";
+          } else {
+            badge.className = "px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-rose-500 text-white uppercase";
+            document.getElementById("sim-freshness-bar").className = "bg-rose-500 h-2.5 rounded-full transition-all duration-300";
+          }
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function loadNetworkMatches() {
+      const container = document.getElementById("ai-matches-container");
+      container.innerHTML = `<div class="p-8 text-center text-xs text-slate-400"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Evaluating multi-factor optimization...</div>`;
+
+      try {
+        const res = await fetch("/api/ai/match-all");
+        const data = await res.json();
+        if (data.success) {
+          document.getElementById("match-total-batches").textContent = data.total_matched;
+          document.getElementById("match-total-meals").textContent = data.total_meals_matched.toLocaleString() + " Meals";
+          document.getElementById("match-avg-score").textContent = data.average_match_score + "%";
+
+          if (data.matches.length === 0) {
+            container.innerHTML = `<div class="p-6 text-center text-xs text-slate-400">No active surplus donations to match right now.</div>`;
+            return;
+          }
+
+          container.innerHTML = data.matches.map(m => `
+            <div class="fb-card p-5 bg-white border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
+              
+              <!-- Left side: Food & Location Details -->
+              <div class="space-y-2 flex-1">
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-extrabold bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full">
+                    ${m.quantity} ${m.unit}
+                  </span>
+                  <h3 class="text-base font-bold text-slate-900">${m.food_name}</h3>
+                  <span class="text-xs font-semibold text-slate-500">(${m.quality} Quality)</span>
+                </div>
+                
+                <p class="text-xs text-slate-600 flex items-center gap-1.5">
+                  <i class="fa-solid fa-location-dot text-emerald-600"></i>
+                  <span>Donor Locality: <strong>${m.location}</strong></span>
+                </p>
+
+                <!-- AI Reasons List (Section 10 Requirements) -->
+                <div class="bg-slate-50 rounded-xl p-3 border border-slate-100 space-y-1 text-xs text-slate-700">
+                  <p class="font-bold text-[11px] text-emerald-800 uppercase tracking-wide mb-1">
+                    <i class="fa-solid fa-circle-check text-emerald-600 mr-1"></i> AI Match Reasons:
+                  </p>
+                  ${m.reasons.map(r => `
+                    <div class="flex items-center gap-2 text-xs">
+                      <span>${r}</span>
+                    </div>
+                  `).join("")}
+                </div>
+              </div>
+
+              <!-- Right side: Recommended NGO Box & CTA -->
+              <div class="bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200/80 p-4 rounded-2xl md:w-72 flex-shrink-0 text-center space-y-2">
+                <div class="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 uppercase">
+                  <i class="fa-solid fa-bullseye text-amber-500"></i> Recommended Receiver
+                </div>
+                <h4 class="font-extrabold text-slate-900 text-base leading-snug">${m.recommended_ngo}</h4>
+                <p class="text-xs text-slate-600 font-medium">${m.ngo_location}</p>
+                
+                <div class="py-1">
+                  <span class="badge-ai-match text-xs font-bold px-3 py-1">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> ${m.match_score}% Match Score
+                  </span>
+                </div>
+
+                <div class="pt-1">
+                  <button onclick="openRequestModal(${m.donation_id}, '${m.food_name.replace(/'/g, "\\'")}', ${m.quantity}, '${m.unit}', '${m.location}')" 
+                    class="btn-primary w-full text-xs font-bold py-2 shadow-sm">
+                    Initiate Redistribution
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          `).join("");
+        }
+      } catch (err) {
+        console.error("Match error:", err);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      runQualitySimulator();
+      loadNetworkMatches();
+    });
+  </script>
+</body>
+</html>
