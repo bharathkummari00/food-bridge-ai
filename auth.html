@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login & Registration – Food Bridge AI</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body class="bg-slate-50 text-slate-800 flex flex-col min-h-screen">
+
+  <!-- Navbar -->
+  <div id="navbar-container"></div>
+
+  <!-- Main Auth Container -->
+  <div class="flex-1 flex items-center justify-center p-4 sm:p-8">
+    <div class="max-w-xl w-full bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/80 shadow-xl space-y-6">
+      
+      <!-- Brand & Title -->
+      <div class="text-center space-y-2">
+        <div class="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-400 text-white flex items-center justify-center text-2xl shadow-lg shadow-emerald-500/25">
+          <i class="fa-solid fa-hand-holding-heart"></i>
+        </div>
+        <h2 class="text-2xl font-extrabold text-slate-900 font-outfit">Welcome to Food Bridge AI</h2>
+        <p class="text-xs text-slate-500">Connecting surplus food with people in need.</p>
+      </div>
+
+      <!-- 1-Click Demo Accounts Box (Viva & Demo Favorite!) -->
+      <div class="bg-gradient-to-r from-emerald-50 via-teal-50 to-amber-50 p-4 rounded-2xl border border-emerald-100 space-y-2">
+        <div class="flex items-center justify-between text-xs">
+          <span class="font-extrabold text-slate-800 flex items-center gap-1.5">
+            <i class="fa-solid fa-bolt-lightning text-amber-500"></i> 1-Click Instant Demo Login:
+          </span>
+          <span class="text-[10px] text-emerald-700 font-bold bg-white px-2 py-0.5 rounded-full border border-emerald-200">Pre-seeded</span>
+        </div>
+        <div class="grid grid-cols-3 gap-2">
+          <button type="button" onclick="handleDemoQuick('donor')" class="p-2 rounded-xl bg-white hover:bg-emerald-50 border border-slate-200 hover:border-emerald-400 text-center transition shadow-sm">
+            <span class="text-sm block">🧑‍🍳</span>
+            <strong class="text-[11px] text-slate-800 block">Donor</strong>
+            <span class="text-[9px] text-slate-400">Banquet Hall</span>
+          </button>
+          <button type="button" onclick="handleDemoQuick('ngo')" class="p-2 rounded-xl bg-white hover:bg-amber-50 border border-slate-200 hover:border-amber-400 text-center transition shadow-sm">
+            <span class="text-sm block">🤝</span>
+            <strong class="text-[11px] text-slate-800 block">NGO Shelter</strong>
+            <span class="text-[9px] text-slate-400">Hope Foundation</span>
+          </button>
+          <button type="button" onclick="handleDemoQuick('admin')" class="p-2 rounded-xl bg-white hover:bg-purple-50 border border-slate-200 hover:border-purple-400 text-center transition shadow-sm">
+            <span class="text-sm block">🛡️</span>
+            <strong class="text-[11px] text-slate-800 block">Admin</strong>
+            <span class="text-[9px] text-slate-400">Director</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Tab Switcher (Login vs Register) -->
+      <div class="flex bg-slate-100 p-1 rounded-2xl">
+        <button type="button" onclick="switchAuthTab('login')" id="btn-tab-login" class="flex-1 py-2.5 text-xs font-extrabold rounded-xl bg-white text-emerald-700 shadow-sm transition">
+          Sign In
+        </button>
+        <button type="button" onclick="switchAuthTab('register')" id="btn-tab-register" class="flex-1 py-2.5 text-xs font-extrabold rounded-xl text-slate-500 hover:text-slate-800 transition">
+          Create Account
+        </button>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <form id="login-form" onsubmit="handleLoginSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Email Address</label>
+          <input type="email" id="login-email" required value="donor@foodbridge.ai"
+            class="w-full px-4 py-2.5 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 font-medium">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Password</label>
+          <input type="password" id="login-password" required value="donor123"
+            class="w-full px-4 py-2.5 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 font-medium">
+        </div>
+
+        <button type="submit" id="login-submit-btn" class="btn-primary w-full py-3 text-sm font-bold shadow-md">
+          Sign In to Account
+        </button>
+      </form>
+
+      <!-- REGISTRATION FORM -->
+      <form id="register-form" onsubmit="handleRegisterSubmit(event)" class="space-y-4 hidden">
+        
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">I want to register as:</label>
+          <div class="grid grid-cols-2 gap-2">
+            <label class="border-2 border-emerald-500 bg-emerald-50/50 p-2.5 rounded-xl cursor-pointer flex items-center gap-2 role-radio" onclick="setRegRole('donor', this)">
+              <input type="radio" name="reg-role" value="donor" checked class="hidden">
+              <span class="text-base">🧑‍🍳</span>
+              <div>
+                <strong class="text-xs text-slate-800 block">Food Donor</strong>
+                <span class="text-[10px] text-slate-500">Restaurant, Caterer, Hall</span>
+              </div>
+            </label>
+            <label class="border-2 border-slate-200 p-2.5 rounded-xl cursor-pointer flex items-center gap-2 role-radio" onclick="setRegRole('ngo', this)">
+              <input type="radio" name="reg-role" value="ngo" class="hidden">
+              <span class="text-base">🤝</span>
+              <div>
+                <strong class="text-xs text-slate-800 block">NGO / Receiver</strong>
+                <span class="text-[10px] text-slate-500">Shelter, Orphanage</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Full Contact Name *</label>
+            <input type="text" id="reg-name" required placeholder="e.g. Ramesh Kumar"
+              class="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 font-medium">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Organization / Entity Name</label>
+            <input type="text" id="reg-org" placeholder="e.g. Grand Heritage Hall"
+              class="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 font-medium">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Email Address *</label>
+            <input type="email" id="reg-email" required placeholder="user@example.com"
+              class="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 font-medium">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Phone Number</label>
+            <input type="tel" id="reg-phone" placeholder="+91 98480 00000"
+              class="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 font-medium">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Password *</label>
+          <input type="password" id="reg-password" required placeholder="Create a secure password"
+            class="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 font-medium">
+        </div>
+
+        <!-- Locality Selector -->
+        <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100 space-y-2">
+          <span class="block text-[11px] font-bold text-slate-600 uppercase">Location Hierarchy (No Lat/Long)</span>
+          <div class="grid grid-cols-3 gap-2">
+            <div>
+              <label class="block text-[10px] text-slate-500">City</label>
+              <select id="reg-city" class="w-full p-1.5 text-xs rounded-lg border border-slate-200 bg-white font-medium"></select>
+            </div>
+            <div>
+              <label class="block text-[10px] text-slate-500">Area</label>
+              <select id="reg-area" class="w-full p-1.5 text-xs rounded-lg border border-slate-200 bg-white font-medium"></select>
+            </div>
+            <div>
+              <label class="block text-[10px] text-slate-500">Colony</label>
+              <select id="reg-colony" class="w-full p-1.5 text-xs rounded-lg border border-slate-200 bg-white font-medium"></select>
+            </div>
+          </div>
+        </div>
+
+        <div id="ngo-capacity-field" class="hidden">
+          <label class="block text-xs font-bold text-slate-700 mb-1">Shelter Meal Capacity (per day)</label>
+          <input type="number" id="reg-capacity" min="10" value="50"
+            class="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 font-medium">
+        </div>
+
+        <button type="submit" id="reg-submit-btn" class="btn-primary w-full py-3 text-sm font-bold shadow-md">
+          Complete Registration
+        </button>
+
+      </form>
+
+    </div>
+  </div>
+
+  <!-- Dynamic Footer -->
+  <div id="footer-container"></div>
+
+  <!-- Scripts -->
+  <script src="/assets/app.js"></script>
+  <script src="/components/navbar.js"></script>
+  <script src="/components/footer.js"></script>
+  <script>
+    let registeredRole = 'donor';
+
+    function switchAuthTab(tab) {
+      const loginForm = document.getElementById("login-form");
+      const regForm = document.getElementById("register-form");
+      const btnLogin = document.getElementById("btn-tab-login");
+      const btnReg = document.getElementById("btn-tab-register");
+
+      if (tab === 'login') {
+        loginForm.classList.remove("hidden");
+        regForm.classList.add("hidden");
+        btnLogin.className = "flex-1 py-2.5 text-xs font-extrabold rounded-xl bg-white text-emerald-700 shadow-sm transition";
+        btnReg.className = "flex-1 py-2.5 text-xs font-extrabold rounded-xl text-slate-500 hover:text-slate-800 transition";
+      } else {
+        loginForm.classList.add("hidden");
+        regForm.classList.remove("hidden");
+        btnReg.className = "flex-1 py-2.5 text-xs font-extrabold rounded-xl bg-white text-emerald-700 shadow-sm transition";
+        btnLogin.className = "flex-1 py-2.5 text-xs font-extrabold rounded-xl text-slate-500 hover:text-slate-800 transition";
+      }
+    }
+
+    function setRegRole(role, el) {
+      registeredRole = role;
+      document.querySelectorAll(".role-radio").forEach(r => {
+        r.className = "border-2 border-slate-200 p-2.5 rounded-xl cursor-pointer flex items-center gap-2 role-radio";
+      });
+      el.className = "border-2 border-emerald-500 bg-emerald-50/50 p-2.5 rounded-xl cursor-pointer flex items-center gap-2 role-radio";
+      el.querySelector("input").checked = true;
+
+      const capField = document.getElementById("ngo-capacity-field");
+      if (role === 'ngo') {
+        capField.classList.remove("hidden");
+      } else {
+        capField.classList.add("hidden");
+      }
+    }
+
+    async function handleDemoQuick(role) {
+      await switchRole(role);
+      window.location.href = "/dashboard";
+    }
+
+    async function handleLoginSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById("login-submit-btn");
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Signing in...`;
+
+      try {
+        const res = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: document.getElementById("login-email").value,
+            password: document.getElementById("login-password").value
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast(data.message, "success");
+          setTimeout(() => window.location.href = "/dashboard", 800);
+        } else {
+          showToast(data.error || "Login failed", "error");
+          btn.disabled = false;
+          btn.textContent = "Sign In to Account";
+        }
+      } catch (err) {
+        showToast("Network error during login", "error");
+        btn.disabled = false;
+        btn.textContent = "Sign In to Account";
+      }
+    }
+
+    async function handleRegisterSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById("reg-submit-btn");
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Creating account...`;
+
+      const payload = {
+        name: document.getElementById("reg-name").value,
+        organization_name: document.getElementById("reg-org").value,
+        email: document.getElementById("reg-email").value,
+        phone: document.getElementById("reg-phone").value,
+        password: document.getElementById("reg-password").value,
+        role: registeredRole,
+        city: document.getElementById("reg-city").value,
+        area: document.getElementById("reg-area").value,
+        colony: document.getElementById("reg-colony").value,
+        capacity: document.getElementById("reg-capacity").value
+      };
+
+      try {
+        const res = await fetch("/api/auth/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast(data.message, "success");
+          setTimeout(() => window.location.href = "/dashboard", 1000);
+        } else {
+          showToast(data.error || "Registration failed", "error");
+          btn.disabled = false;
+          btn.textContent = "Complete Registration";
+        }
+      } catch (err) {
+        showToast("Network error during registration", "error");
+        btn.disabled = false;
+        btn.textContent = "Complete Registration";
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get("tab") === "register") {
+        switchAuthTab("register");
+      }
+      setupLocationHierarchy("reg-city", "reg-area", "reg-colony", "Warangal", "Hanamkonda", "Subedari");
+    });
+  </script>
+</body>
+</html>
