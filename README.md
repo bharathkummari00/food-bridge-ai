@@ -99,6 +99,25 @@ Open your browser and navigate to:
 
 ---
 
+## ☁️ Deploy to Render
+
+The repository includes a Render Blueprint (`render.yaml`) that runs the Flask
+application with Gunicorn, configures a generated `SECRET_KEY`, and checks
+`/api/health`.
+
+1. Push this repository to GitHub.
+2. Sign in to [Render](https://render.com/) with GitHub and authorize access to
+   this repository.
+3. In the Render dashboard, select **New → Blueprint**, choose this repository,
+   and apply the `render.yaml` configuration.
+4. Open the deployed `onrender.com` URL after the first deploy finishes.
+
+The service uses SQLite and the local uploads directory. On Render's free
+instance, both are ephemeral and can be reset when the service restarts or
+redeploys; use persistent storage before relying on it for real donations.
+
+---
+
 ## 🔑 Pre-Seeded Demo Login Credentials
 
 For quick evaluation during project reviews and viva demonstrations, the top navigation bar features a **1-Click Quick Switcher** ribbon that allows you to instantly switch between roles without typing! You can also sign in manually with these accounts:

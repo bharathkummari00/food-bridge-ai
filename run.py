@@ -1,16 +1,19 @@
 """
-Food Bridge AI Launcher
-Runs the complete full-stack web application.
+Food Bridge AI Root Launcher
+Runs the complete full-stack web application from the workspace root.
 """
 
 import sys
 import os
 from pathlib import Path
 
-# Add project root to Python module search path
-PROJECT_ROOT = Path(__file__).resolve().parent
-if str(PROJECT_ROOT) not in sys.path:
-    sys.path.insert(0, str(PROJECT_ROOT))
+# Add FoodBridgeAI directory to sys.path
+PROJECT_DIR = Path(__file__).resolve().parent / "FoodBridgeAI"
+if str(PROJECT_DIR) not in sys.path:
+    sys.path.insert(0, str(PROJECT_DIR))
+
+# Switch working directory to FoodBridgeAI for correct relative paths
+os.chdir(PROJECT_DIR)
 
 from backend.app import app
 
